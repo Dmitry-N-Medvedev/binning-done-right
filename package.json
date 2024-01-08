@@ -1,0 +1,26 @@
+{
+  "name": "@enercon-open-source/binning-done-right",
+  "version": "0.0.0",
+  "description": "binning done right",
+  "type": "module",
+  "packageManager": "pnpm@8.14.0",
+  "engines": {
+    "node": "21.5.0",
+    "pnpm": "8.14.0"
+  },
+  "engineStrict": true,
+  "scripts": {
+    "preinstall": "npx only-allow pnpm"
+  },
+  "keywords": [],
+  "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enercon-open-source/binning-done-right.git"
+  },
+  "bugs": {
+    "url": "https://github.com/enercon-open-source/binning-done-right/issues"
+  },
+  "homepage": "https://github.com/enercon-open-source/binning-done-right#readme"
+}
