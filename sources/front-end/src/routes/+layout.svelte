@@ -1,6 +1,7 @@
 <script>
 	import 'inter-ui/inter-variable.css';
 	// import { env } from '$env/dynamic/public';
+  import Header from '../lib/containers/Header/Header.svelte';
 
   $effect(() => {});
 </script>
@@ -47,7 +48,7 @@
 </style>
 
 <div class="layout-root">
-  <div>header</div>
+  <Header />
   <main>
 	  <slot />
   </main>
