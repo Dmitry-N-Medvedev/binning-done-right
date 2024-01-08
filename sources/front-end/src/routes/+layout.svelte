@@ -1,7 +1,7 @@
 <script>
 	import 'inter-ui/inter-variable.css';
-	// import { env } from '$env/dynamic/public';
   import Header from '../lib/containers/Header/Header.svelte';
+  import Footer from '../lib/containers/Footer/Footer.svelte';
 
   $effect(() => {});
 </script>
@@ -52,5 +52,5 @@
   <main>
 	  <slot />
   </main>
-  <footer>footer</footer>
+  <Footer />
 </div>
