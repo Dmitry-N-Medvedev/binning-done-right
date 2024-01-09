@@ -38,16 +38,18 @@
   .source-data-file {
     grid-area: source-data-file;
     justify-content: start;
+    font-size: 1.25rem;
   }
 
   .records-info {
     grid-area: records-info;
     font-feature-settings: "frac" 1, "tnum" 1, "zero" 1;
-    font-size: 2.0rem;
+    font-size: 2rem;
   }
 
   .channel {
     grid-area: channel;
+    font-size: 1.3rem;
   }
 
   :is(.source-data-file, .records-info, .channel, .progress) {
