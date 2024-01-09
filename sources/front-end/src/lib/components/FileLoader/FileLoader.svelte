@@ -1,4 +1,15 @@
 <script>
+  import {
+    createDataFileStructure,
+  } from '$lib/structures/createDataFileStructure.js';
+  import DeleteIcon from '$lib/icons/DeleteIcon.svelte';
+
+  let {
+    /**
+     * @type {function}
+    */
+    onFile,
+  } = $props();
   let progressValue = $state(0);
   /**
    * @type {FileList | undefined }
@@ -37,6 +48,12 @@
     }
 
     FileObject = selectedFiles.item(0);
+  });
+
+  $effect(() => {
+    const dataFileStructure = createDataFileStructure(FileObject);
+
+    onFile(dataFileStructure);
   });
 
   $effect(() => {
@@ -126,7 +143,7 @@
     align-items: center;
     background-color: var(--theme-red);
     border: none;
-    color: var(--theme-white);
+    color: var(--theme-black);
     visibility: hidden;
   }
 
@@ -153,6 +170,8 @@
     />
   </div>
   <div class="file-name-container">{FileObject?.name}</div>
-  <button class="delete-file-button" class:isDeleteButtonVisible onclick={handleDeleteFileClick}>del</button>
+  <button class="delete-file-button" class:isDeleteButtonVisible onclick={handleDeleteFileClick}>
+    <DeleteIcon />
+  </button>
   <progress class="progress" max="100" value="{progressValue}" aria-label="upload progress"></progress>
 </div>

@@ -1,5 +1,32 @@
 <script>
+  import {
+    DataFileStore,
+  } from '$lib/stores/DataFile.svelte.js';
   import FileLoader from "../lib/components/FileLoader/FileLoader.svelte";
+
+  /**
+   * @typedef {import('../lib/structures/createDataFileStructure.js').DataFileStructure} DataFileStructure
+  */
+
+  /**
+   * @param e {DataFileStructure}
+   */
+  const handleOnFile = (e = null) => {
+    const {
+      type = null,
+      payload = null,
+    } = e;
+
+    if (typeof type === 'undefined' || type === null) {
+      throw new TypeError('undefined event type', e);
+    }
+
+    if (type !== 'file') {
+      return;
+    }
+
+    DataFileStore.setFile(payload);
+  };
 </script>
 
 <style>
@@ -28,6 +55,6 @@
 
 <article>
   <section class="file-loader-container">
-    <FileLoader />
+    <FileLoader onFile={handleOnFile} />
   </section>
 </article>
