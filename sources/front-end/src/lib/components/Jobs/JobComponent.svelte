@@ -7,10 +7,6 @@
     channelName = '',
     isFocused = false,
   } = $props();
-
-  $effect(() => {
-    console.log({ isFocused });
-  });
 </script>
 
 <style>
