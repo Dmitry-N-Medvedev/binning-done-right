@@ -12,44 +12,59 @@
   let fileInput = $state();
 
   const handleDeleteFileClick = () => {
-    console.log({ fileInput });
-
     if (fileInput) {
       fileInput.value = "";
     }
+
+    FileObject = null;
   }
 
   $effect(() => {
-    if (selectedFiles) {
-      FileObject = selectedFiles?.item(0);
-      isDeleteButtonVisible = true;
+    if (typeof selectedFiles === 'undefined') {
+      return;
     }
+
+    if (selectedFiles === null) {
+      return;
+    }
+
+    if ((selectedFiles instanceof FileList) === false) {
+      return;
+    }
+
+    if (selectedFiles.length === 0) {
+      return;
+    }
+
+    FileObject = selectedFiles.item(0);
   });
 
   $effect(() => {
-    console.log({ isDeleteButtonVisible, FileObject, selectedFiles });
+    isDeleteButtonVisible = FileObject instanceof File;
   });
 </script>
+
 <style>
   .file-loader {
     display: grid;
     grid-template-areas:
-      'button-container file-name-container'
-      'progress progress'
+      'load-button-container file-name-container delete-file-container'
+      'progress progress progress'
     ;
-    grid-template-columns: auto minmax(500px, 1fr);
+    grid-template-columns: auto minmax(500px, 1fr) auto;
     grid-template-rows: 1fr auto;
     margin: 0 auto;
-    padding: var(--gap) calc(var(--gap) * 2);
+    padding: calc(var(--gap) * 2) calc(var(--gap) * 2) var(--gap);
     gap: var(--gap);
     background-color: var(--theme-black);
+    border-radius: var(--gap);
   }
 
-  .button-container {
-    grid-area: button-container;
+  .load-button-container {
+    grid-area: load-button-container;
   }
 
-  .button-container label {
+  .load-button-container label {
     display: flex;
     color: var(--main-background-color);
     cursor: pointer;
@@ -64,14 +79,14 @@
     line-height: 2rem;
   }
 
-  .button-container button {
+  .load-button-container button {
     display: flex;
     flex: 1 0 auto;
     justify-content: center;
     align-items: center;
   }
 
-  .button-container > .file-input {
+  .load-button-container > .file-input {
     display: none;
   }
 
@@ -91,7 +106,7 @@
     background-color: var(--theme-green);
   }
 
-  .button-container,
+  .load-button-container,
   .file-name-container,
   .progress {
     display: flex;
@@ -100,23 +115,12 @@
 
   .file-name-container {
     grid-area: file-name-container;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: 1fr;
-    grid-template-areas:
-      'file-name delete-file-button'
-    ;
+    display: flex;
+    justify-content: end;
     gap: var(--gap);
   }
 
-  .file-name-container > .file-name {
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    height: 100%;
-  }
-
-  .file-name-container > .delete-file-button {
+  .delete-file-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -133,7 +137,7 @@
 </style>
 
 <div class="file-loader">
-  <div class="button-container">
+  <div class="load-button-container">
     <button>
       <label for="file-loader">
         load
@@ -148,9 +152,7 @@
       bind:this={fileInput}
     />
   </div>
-  <div class="file-name-container">
-    <div class="file-name">{FileObject?.name}</div>
-    <button class="delete-file-button" class:isDeleteButtonVisible onclick={handleDeleteFileClick}>del</button>
-  </div>
+  <div class="file-name-container">{FileObject?.name}</div>
+  <button class="delete-file-button" class:isDeleteButtonVisible onclick={handleDeleteFileClick}>del</button>
   <progress class="progress" max="100" value="{progressValue}" aria-label="upload progress"></progress>
 </div>
