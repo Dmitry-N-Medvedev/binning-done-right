@@ -4,6 +4,8 @@
   } from '$lib/stores/DataFile.svelte.js';
   import FileLoader from "../lib/components/FileLoader/FileLoader.svelte";
   import Jobs from '$lib/components/Jobs/Jobs.svelte';
+  import BinningResults from '$lib/components/BinningResults/BinningResults.svelte';
+  import BinningChart from '$lib/components/BinningChart/BinningChart.svelte';
 
   /**
    * @typedef {import('../lib/structures/createDataFileStructure.js').DataFileStructure} DataFileStructure
@@ -56,7 +58,18 @@
 
   .jobs-container {
     grid-area: jobs-container;
-    overflow-y: hidden;
+  }
+
+  .job-results-container {
+    grid-area: job-results-container;
+  }
+
+  .binning-chart-container {
+    grid-area: binning-chart-container;
+  }
+
+  :is(.jobs-container, .job-results-container, .binning-chart-container) {
+    overflow-y: auto;
   }
 </style>
 
@@ -66,5 +79,11 @@
   </section>
   <section class="jobs-container">
     <Jobs />
+  </section>
+  <section class="job-results-container">
+    <BinningResults />
+  </section>
+  <section class="binning-chart-container">
+    <BinningChart />
   </section>
 </article>

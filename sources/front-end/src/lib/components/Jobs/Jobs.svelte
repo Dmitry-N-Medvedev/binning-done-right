@@ -16,10 +16,6 @@
       }
     } = e;
   };
-
-  $effect(() => {
-    console.log(JobsStore.state);
-  });
 </script>
 
 <style>
