@@ -30,6 +30,14 @@
     FileObject = null;
   }
 
+  const uploadFileObject = () => {
+    console.log('uploadFileObject', FileObject);
+  }
+
+  const selectFile = () => {
+    console.log('selectFile');
+  }
+
   $effect(() => {
     if (typeof selectedFiles === 'undefined') {
       return;
@@ -155,9 +163,9 @@
 
 <div class="file-loader">
   <div class="load-button-container">
-    <button>
+    <button onclick={ FileObject ? uploadFileObject : selectFile }>
       <label for="file-loader">
-        load
+        { FileObject ? 'upload' : 'select' }
       </label>
     </button>
     <input
