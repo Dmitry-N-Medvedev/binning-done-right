@@ -69,7 +69,7 @@
   }
 
   :is(.jobs-container, .job-results-container, .binning-chart-container) {
-    overflow-y: auto;
+    overflow-y: hidden;
   }
 </style>
 

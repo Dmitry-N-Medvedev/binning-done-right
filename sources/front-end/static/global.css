@@ -20,6 +20,15 @@
 
   --border-radius: 0.25rem;
   --scale-factor: 1.125;
+
+  --table-color: var(--theme-white);
+  --table-background-color: var(--theme-black);
+  --table-caption-color: var(--main-background-color);
+  --table-caption-background-color: var(--theme-black);
+  --table-header-row-color: var(--theme-white);
+  --table-header-row-background-color: var(--theme-black);
+  --table-rows-color: var(--theme-white);
+  --table-rows-background-color: var(--theme-black);
 }
 
 * {

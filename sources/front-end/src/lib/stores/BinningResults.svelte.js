@@ -8,14 +8,18 @@ class BinningResults {
       const binLowerBoundary =  Math.random();
       const binUpperBoundary = Math.random() + binLowerBoundary;
       const binCenter = (binLowerBoundary + binUpperBoundary) / 2;
-      const avgValue = Math.random();
       const binningResult = {
         id: i,
         binLowerBoundary,
         binUpperBoundary,
         binCenter,
         analyses: new Map([
-          ['avg', avgValue],
+          ['avg', Math.random()],
+          ['mean', Math.random()],
+          ['sum', Math.random()],
+          ['max', Math.random()],
+          ['min', Math.random()],
+          ['median', Math.random()],
         ]),
       };
 
