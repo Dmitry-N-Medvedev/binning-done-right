@@ -20,7 +20,7 @@
     grid-area: a;
     font-size: 2.0rem;
     align-items: center;
-    color: var(--theme-gray);
+    /* color: var(--theme-gray); */
     justify-content: end;
   }
 
@@ -42,7 +42,7 @@
     justify-content: start;
     font-size: 3rem;
     line-height: 2.6rem;
-    color: var(--theme-gray);
+    color: var(--theme-light_gray_bright);
   }
 
   :is(.isN, .isM) {
