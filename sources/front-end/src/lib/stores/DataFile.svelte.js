@@ -1,12 +1,18 @@
 class DataFile {
-  state = $state();
+  state = $state(new Map());
 
   /**
    * 
    * @param {File} fileObject 
    */
   setFile(fileObject = null) {
-    this.state = fileObject;
+    console.log(`${this.constructor.name}.setFile`, fileObject);
+
+    if (this.state.has(fileObject.name) === true) {
+      console.debug(`the file with the ${fileObject.name} name has already been registered`);
+    }
+
+    this.state.set(fileObject.name, fileObject);
   }
 }
 
