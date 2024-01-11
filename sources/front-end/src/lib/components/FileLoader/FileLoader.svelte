@@ -30,7 +30,6 @@
     FileObject = null;
   }
 
-
   const clearFileInput = () => {
     if (fileInput) {
       fileInput.value = "";
@@ -76,12 +75,6 @@
 
   $effect(() => {
     isDeleteButtonVisible = FileObject instanceof File;
-  });
-
-  $effect(() => {
-    console.log({ FileObject });
-    console.log({ isDeleteButtonVisible });
-    console.log({ selectedFiles });
   });
 </script>
 
