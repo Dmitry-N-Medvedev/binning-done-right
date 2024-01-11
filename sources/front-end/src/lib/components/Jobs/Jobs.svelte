@@ -1,21 +1,8 @@
 <script>
+  import {
+    JobsStore,
+  } from '$lib/stores/Jobs.svelte.js';
   import JobComponent from "./JobComponent.svelte";
-  import { JobsStore } from "$lib/stores/Jobs.svelte.js";
-
-  /**
-   * @param e {Event}
-   */
-  const setChecked = (e) => {
-    console.log(e.target);
-
-    const {
-      target: {
-        dataset: {
-          id,
-        }
-      }
-    } = e;
-  };
 </script>
 
 <style>
@@ -51,6 +38,7 @@
     /* padding: 0 var(--gap); */
 
     overflow-y: auto;
+    pointer-events: auto;
   }
 
   .jobs-list input[type="radio"] {
@@ -82,15 +70,8 @@
   <div class="jobs-list">
     {#each JobsStore.state.values() as job(job.id)}
       <input id="radio:{job.id}" type="radio" class="radio-input" name="jobs" />
-      <label class="job-container" id={job.id} for="radio:{job.id}">
-        <JobComponent
-          jobId={job.id}
-          sourceFileName={job.sourceFileName}
-          recordsProcessed={job.progress.recordsProcessed}
-          recordsTotal={job.progress.recordsTotal}
-          channelName={job.channelName}
-          isFocused={job.checked}
-        />
+      <label class="job-container" for="radio:{job.id}">
+        <JobComponent {job} />
       </label>
     {/each}
   </div>

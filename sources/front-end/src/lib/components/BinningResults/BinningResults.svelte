@@ -61,6 +61,10 @@
     cursor: pointer;
   }
 
+  .table-rows {
+    pointer-events: auto;
+  }
+
   .table-rows > .binning-result:hover,
   .table-rows > .binning-result:hover > div
   {

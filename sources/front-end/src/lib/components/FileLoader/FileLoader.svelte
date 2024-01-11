@@ -11,6 +11,8 @@
     onFile,
   } = $props();
   let progressValue = $state(0);
+  let progressMax = $state(0);
+  let progressCompleted = $derived(progressValue >= progressMax);
   /**
    * @type {FileList | undefined | null }
    */
@@ -39,8 +41,31 @@
     selectedFiles = null;
   };
 
+  const fakeTimer = () => new Promise((resolve) => {
+    setTimeout(resolve, Math.trunc(Math.random() * 1000));
+  });
+
+  async function* fakeUploadProgress(start = 0, end = 0, step = 0) {
+    let value = start;
+
+    for (let i = start; i <= end; i += step) {
+      await fakeTimer();
+      value += step;
+      yield value;
+    }
+  }
+
   const uploadFileObject = async() => {
+    if (!FileObject) {
+      throw new ReferenceError('FileObject is undefined');
+    }
+
     const dataFileStructure = createDataFileStructure(FileObject);
+
+    // const step = progressMax / Math.trunc(Math.random() * 10);
+    // for await (const value of fakeUploadProgress(0, progressMax, step)) {
+    //   progressValue = Math.trunc(value);
+    // }
 
     await onFile(dataFileStructure);
 
@@ -71,6 +96,7 @@
     }
 
     FileObject = selectedFiles.item(0);
+    progressMax = FileObject?.size;
   });
 
   $effect(() => {
@@ -86,7 +112,7 @@
       'progress progress progress'
     ;
     grid-template-columns: auto minmax(500px, 1fr) auto;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: 1fr 0;
     margin: 0 auto;
     padding: calc(var(--gap) * 2) calc(var(--gap) * 2) var(--gap);
     gap: var(--gap);
@@ -102,7 +128,8 @@
     display: flex;
     color: var(--main-background-color);
     cursor: pointer;
-    border-radius: calc(var(--gap) / 2);
+    /* border-radius: calc(var(--gap) / 2); */
+    border: none;
     flex: 1 0 auto;
     height: 100%;
     width: 100%;
@@ -118,6 +145,8 @@
     flex: 1 0 auto;
     justify-content: center;
     align-items: center;
+
+    pointer-events: auto;
   }
 
   .load-button-container > .file-input {
@@ -162,12 +191,17 @@
     border: none;
     color: var(--theme-black);
     visibility: hidden;
+
+    pointer-events: auto;
   }
 
   .isDeleteButtonVisible {
     visibility: visible !important;
   }
 
+  .progressCompleted {
+    filter: opacity(0.0);
+  }
 </style>
 
 <div class="file-loader">
@@ -192,5 +226,5 @@
   <button class="delete-file-button" class:isDeleteButtonVisible onclick={handleDeleteFileClick}>
     <DeleteIcon />
   </button>
-  <progress class="progress" max="100" value="{progressValue}" aria-label="upload progress"></progress>
+  <!-- <progress class="progress" class:progressCompleted max={progressMax} value={progressValue} aria-label="upload progress"></progress> -->
 </div>
