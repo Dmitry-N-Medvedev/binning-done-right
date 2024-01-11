@@ -1,11 +1,17 @@
 <script>
   import {
-    DataFileStore,
-  } from '$lib/stores/DataFile.svelte.js';
+    JobsStore,
+  } from '$lib/stores/Jobs.svelte.js';
   import FileLoader from "../lib/components/FileLoader/FileLoader.svelte";
   import Jobs from '$lib/components/Jobs/Jobs.svelte';
   import BinningResults from '$lib/components/BinningResults/BinningResults.svelte';
   import BinningChart from '$lib/components/BinningChart/BinningChart.svelte';
+
+  import {
+    fakeJobResults,
+  } from '$lib/scripts/fakeJobResults.svelte.js';
+
+  const NETWORK_FRAME_SIZE = 1500;
 
   /**
    * @typedef {import('../lib/structures/createDataFileStructure.js').DataFileStructure} DataFileStructure
@@ -17,18 +23,60 @@
   const handleOnFile = async(e = null) => {
     const {
       type = null,
+      /**
+       * @type {File}
+      */
       payload = null,
     } = e;
+    const tx = crypto.randomUUID();
 
     if (typeof type === 'undefined' || type === null) {
       throw new TypeError('undefined event type', e);
     }
 
     if (type !== 'file') {
-      return;
+      throw new TypeError('not of the "file" type');
     }
 
-    DataFileStore.setFile(payload);
+    const fileStreamReader = new ReadableStreamBYOBReader(payload.stream());
+
+    let frameCounter = 0;
+
+    while(true) {
+      const view = new Uint8Array(NETWORK_FRAME_SIZE);
+      const { done, value } = await fileStreamReader.read(view);
+
+      if (done) {
+        return Promise.resolve;
+      } else {
+        sendChunk(value, frameCounter, tx);
+
+        frameCounter += 1;
+      }
+    }
+
+    // fakeJobResults(payload);
+  };
+
+  /**
+   * 
+   * @param frame {Uint8Array}
+   * @param frameCounter {Number}
+   * @param tx {String}
+   */
+  const sendChunk = async(frame, frameCounter, tx) => {
+    const networkMessageObject = {
+      type: 'csv',
+      meta: {
+        tx,
+        frameCounter,
+      },
+      payload: frame,
+    };
+    
+    const networkMessage = (new TextEncoder()).encode(JSON.stringify(networkMessageObject));
+
+    console.log({ networkMessage, exceeds: networkMessage.byteLength - NETWORK_FRAME_SIZE });
 
     return Promise.resolve;
   };

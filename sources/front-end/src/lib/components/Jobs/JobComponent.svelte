@@ -1,12 +1,12 @@
 <script>
   let {
-    jobId = '',
-    sourceFileName = '',
-    recordsProcessed = 0,
-    recordsTotal = 0,
-    channelName = '',
-    isFocused = false,
+    /**
+     * @type {Object}
+    */
+    job,
   } = $props();
+
+  let isFocused = $state(false);
 </script>
 
 <style>
@@ -87,10 +87,10 @@
   }
 </style>
 
-<fieldset class="job-component" class:isFocused>
-  <legend>{jobId}</legend>
-  <div class="source-data-file">{sourceFileName}</div>
-  <div class="records-info">{recordsProcessed}/{recordsTotal}</div>
-  <div class="channel">{channelName}</div>
-  <progress class="progress" max={recordsTotal} value="{recordsProcessed}" aria-label="job progress"></progress>
+<fieldset id="job:{job.id}" class="job-component" class:isFocused>
+  <legend>{job.id}</legend>
+  <div class="source-data-file">{job.file.name}</div>
+  <div class="records-info">{job.progress.recordsProcessed}/{job.progress.recordsTotal}</div>
+  <div class="channel">{job.channelName}</div>
+  <progress class="progress" max={job.progress.recordsTotal} value="{job.progress.recordsProcessed}" aria-label="job progress"></progress>
 </fieldset>

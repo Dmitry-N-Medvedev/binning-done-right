@@ -36,16 +36,13 @@
   margin: 0;
   padding: 0;
 
-  /* pointer-events: none;
-  user-select: none; */
-
-  user-select: none;
-
   position: relative;
 }
 
 html {
   font-family: var(--main-font-family);
+  pointer-events: none;
+  user-select: none;
 }
 
 @supports (font-variation-settings: normal) {
