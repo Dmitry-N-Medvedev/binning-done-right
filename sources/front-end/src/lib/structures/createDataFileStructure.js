@@ -1,7 +1,7 @@
 /**
   * @typedef DataFileStructure
   * @type {Object}
-  * @property {string} type
+  * @property {string | null | undefined} type
   * @property {File | null | undefined} payload
 */
 

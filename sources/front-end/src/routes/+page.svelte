@@ -12,9 +12,9 @@
   */
 
   /**
-   * @param e {DataFileStructure}
+   * @param e {DataFileStructure | null}
    */
-  const handleOnFile = (e = null) => {
+  const handleOnFile = async(e = null) => {
     const {
       type = null,
       payload = null,
@@ -29,6 +29,8 @@
     }
 
     DataFileStore.setFile(payload);
+
+    return Promise.resolve;
   };
 </script>
 

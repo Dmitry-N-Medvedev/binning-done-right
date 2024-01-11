@@ -12,31 +12,47 @@
   } = $props();
   let progressValue = $state(0);
   /**
-   * @type {FileList | undefined }
+   * @type {FileList | undefined | null }
    */
-  let selectedFiles = $state();
+  let selectedFiles = $state(null);
   /**
    * @type {File | undefined | null}
    */
-  let FileObject = $state();
+  let FileObject = $state(null);
   let isDeleteButtonVisible = $state(false);
   let fileInput = $state();
 
+  let fileLoaderInputId = $state(`fl:${crypto.randomUUID()}`);
+
   const handleDeleteFileClick = () => {
+    clearFileInput();
+
+    FileObject = null;
+  }
+
+
+  const clearFileInput = () => {
     if (fileInput) {
       fileInput.value = "";
     }
 
     FileObject = null;
+    selectedFiles = null;
+  };
+
+  const uploadFileObject = async() => {
+    const dataFileStructure = createDataFileStructure(FileObject);
+
+    await onFile(dataFileStructure);
+
+    clearFileInput();
   }
 
-  const uploadFileObject = () => {
-    console.log('uploadFileObject', FileObject);
-  }
-
-  const selectFile = () => {
-    console.log('selectFile');
-  }
+  $effect(() => {
+    if (fileInput) {
+      fileLoaderInputId = `fl:${crypto.randomUUID()}`;
+    }
+  });
 
   $effect(() => {
     if (typeof selectedFiles === 'undefined') {
@@ -59,13 +75,13 @@
   });
 
   $effect(() => {
-    const dataFileStructure = createDataFileStructure(FileObject);
-
-    onFile(dataFileStructure);
+    isDeleteButtonVisible = FileObject instanceof File;
   });
 
   $effect(() => {
-    isDeleteButtonVisible = FileObject instanceof File;
+    console.log({ FileObject });
+    console.log({ isDeleteButtonVisible });
+    console.log({ selectedFiles });
   });
 </script>
 
@@ -163,21 +179,23 @@
 
 <div class="file-loader">
   <div class="load-button-container">
-    <button onclick={ FileObject ? uploadFileObject : selectFile }>
-      <label for="file-loader">
-        { FileObject ? 'upload' : 'select' }
-      </label>
-    </button>
-    <input
-      id="file-loader"
-      type="file"
-      accept=".csv"
-      class="file-input"
-      bind:files={selectedFiles}
-      bind:this={fileInput}
-    />
+    {#if FileObject}
+        <button onclick={uploadFileObject}>upload</button>
+      {:else}
+        <button>
+          <label for={fileLoaderInputId}>select</label>
+        </button>
+        <input
+          id={fileLoaderInputId}
+          type="file"
+          accept=".csv"
+          class="file-input"
+          bind:files={selectedFiles}
+          bind:this={fileInput}
+        />
+    {/if}
   </div>
-  <div class="file-name-container">{FileObject?.name}</div>
+  <div class="file-name-container">{FileObject?.name }</div>
   <button class="delete-file-button" class:isDeleteButtonVisible onclick={handleDeleteFileClick}>
     <DeleteIcon />
   </button>
