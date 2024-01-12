@@ -34,6 +34,8 @@
       }
     }
   };
+
+  let itemsMap = $derived(BinningResultsStore.state);
 </script>
 
 <style>
@@ -46,7 +48,7 @@
 
   .binning-result {
     --visibility-on-hover: hidden;
-    --binning-results-gap: var(--gap);
+    --binning-results-gap: calc(var(--gap) / 2);
 
     display: grid;
     grid-template-areas:
@@ -131,7 +133,7 @@
     </div>
   </div>
   <div slot="table-rows" class="table-rows">
-    {#each BinningResultsStore.state.values() as binningResult(binningResult.id)}
+    {#each itemsMap?.values() as binningResult(binningResult.id)}
       <div id={binningResult.id} class="binning-result">
         <div class="bin-id">{binningResult.id}</div>
         <div class="bin-lower-boundary">{toFixed(binningResult.binLowerBoundary, 3)}</div>
@@ -139,11 +141,6 @@
         <div class="bin-center">{toFixed(binningResult.binCenter)}</div>
         <div class="bin-analyses">
           <MultiValueCell dataObject={binningResult.analyses} {format} />
-          <!-- {#each binningResult.analyses.entries() as [analysisName, analysisValue](analysisName)}
-            <div class="bin-analysis" data-analysis-name={analysisName}>
-              {toFixed(binningResult.analyses.get(analysisName), 5)}
-            </div>
-          {/each} -->
         </div>
       </div>  
   {/each}

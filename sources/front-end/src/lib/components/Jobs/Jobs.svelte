@@ -2,7 +2,22 @@
   import {
     JobsStore,
   } from '$lib/stores/Jobs.svelte.js';
+  import {
+    BinningResultsStore,
+  } from '$lib/stores/BinningResults.svelte.js';
   import JobComponent from "./JobComponent.svelte";
+
+  const handleSelect = (e) => {
+    const {
+      target: {
+        dataset: {
+          jobId,
+        },
+      },
+    } = e;
+
+    BinningResultsStore.activateJobId(jobId);
+  };
 </script>
 
 <style>
@@ -69,7 +84,7 @@
   <h2 class="jobs-caption">jobs</h2>
   <div class="jobs-list">
     {#each JobsStore.state.values() as job(job.id)}
-      <input id="radio:{job.id}" type="radio" class="radio-input" name="jobs" />
+      <input id="radio:{job.id}" type="radio" class="radio-input" name="jobs" data-job-id={job.id} onchange={handleSelect} />
       <label class="job-container" for="radio:{job.id}">
         <JobComponent {job} />
       </label>

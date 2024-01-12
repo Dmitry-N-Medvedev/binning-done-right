@@ -9,29 +9,6 @@ import {
 } from '$lib/stores/Jobs.svelte.js';
 
 const NETWORK_FRAME_SIZE = 1500;
-const generateInitialJobResult = () => {
-  const result = new Map();
-
-  for (let i = 0; i < 10; i += 1) {
-    const id = crypto.randomUUID();
-    result.set(id, {
-      id,
-      binLowerBoundary: 0,
-      binUpperBoundary: 0,
-      binCenter: 0,
-      analyses: new Map([
-        ['min', 0],
-        ['max', 0],
-        ['avg', 0],
-        ['mean', 0],
-        ['median', 0],
-      ]),
-    });
-  }
-
-  return result;
-}
-
 const fakeNetworkLatency = () => new Promise((resolve) => {
   const timeOut = () => Math.random() * 10 + 1;
   const t = setTimeout(() => {
@@ -117,7 +94,9 @@ export const fakeJobResults = async(fileObject = null) => {
 
   const jobId = JobsStore.add(fileObject);
 
-  return await uploadFile(fileObject, jobId);
+  await uploadFile(fileObject, jobId);
+
+  BinningResultsStore.registerJob(jobId);
 
   // const initialJobResult = generateInitialJobResult();
 
