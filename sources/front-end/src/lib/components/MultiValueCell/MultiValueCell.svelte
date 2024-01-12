@@ -1,4 +1,8 @@
 <script>
+  import {
+    Analyses,
+  } from '$lib/constants/analyses.js';
+
   let {
     /**
      * @type {Map | null}
@@ -13,6 +17,21 @@
   } = $props();
 
   let items = $state();
+  let multiValueCellDiv = $state();
+
+  $effect(() => {
+    if (!multiValueCellDiv) {
+      return;
+    }
+
+    multiValueCellDiv.style.gridTemplateAreas = `"${Analyses.join(' ')}"`;
+
+    const styleSheetElement = document.createElement('style');
+    
+    styleSheetElement.innerHTML = Analyses.map((analysis) => `.${analysis} { grid-area: ${analysis}; }`).join('');
+
+    document.getElementsByTagName('head')[0].appendChild(styleSheetElement);
+  });
 
   $effect(() => {
     if (dataObject === null) {
@@ -30,7 +49,6 @@
 <style>
   .multi-value-cell {
     display: grid;
-    grid-auto-flow: column;
     grid-auto-columns: 1fr;
     align-items: center;
     width: 100%;
@@ -68,10 +86,10 @@
   }
 </style>
 
-<div class="multi-value-cell">
+<div class="multi-value-cell" bind:this={multiValueCellDiv}>
   {#if dataObject}
     {#each dataObject.entries() as [key, value](key)}
-      <div class="multi-value-cell-value">
+      <div class="multi-value-cell-value {key}">
         <div class="val">
           {format(key, value)}
         </div>

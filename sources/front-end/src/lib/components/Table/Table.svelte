@@ -2,13 +2,13 @@
   .table {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto auto 1fr;
     grid-template-areas:
       'table-caption'
       'table-header-row'
       'table-rows'
     ;
-    gap: var(--gap);
+    /* gap: var(--gap); */
     height: 100%;
 
     color: var(--table-color);
