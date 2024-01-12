@@ -30,6 +30,8 @@
 
     color: var(--table-header-row-color);
     background-color: var(--table-header-row-background-color);
+
+    font-size: 2rem;
   }
 
   .table-rows {
