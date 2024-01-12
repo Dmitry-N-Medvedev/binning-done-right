@@ -55,9 +55,6 @@ class BinningResults {
     }
 
     this.#activeJobId = jobId;
-
-    console.log('#activeJobId', this.#activeJobId);
-
     this.#refreshState();
   }
 
@@ -94,9 +91,7 @@ class BinningResults {
   async #generateFakeJobResults (jobId = null) {
     if (jobId === null) {
       throw new ReferenceError('jobId is undefined');
-    } else {
-      console.log({ jobId });
-    }
+    } 
 
     const jobGenerator = genJob();
 
