@@ -6,6 +6,7 @@
   import Jobs from '$lib/components/Jobs/Jobs.svelte';
   import BinningResults from '$lib/components/BinningResults/BinningResults.svelte';
   import BinningChart from '$lib/components/BinningChart/BinningChart.svelte';
+  import DataFieldComponent from '$lib/components/DataFieldComponent/DataFieldComponent.svelte';
 
   import {
     fakeJobResults,
@@ -47,12 +48,12 @@
 
     display: grid;
     height: 100%;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 1fr 1fr 3fr;
     grid-template-rows: auto 1fr 1fr;
     grid-template-areas:
-      'file-loader-container file-loader-container'
-      'jobs-container job-results-container'
-      'binning-chart-container binning-chart-container'
+      'file-loader-container file-loader-container file-loader-container'
+      'jobs-container field-data-container job-results-container'
+      'binning-chart-container binning-chart-container binning-chart-container'
     ;
     gap: var(--gap);
 
@@ -69,6 +70,10 @@
     grid-area: jobs-container;
   }
 
+  .field-data-container {
+    grid-area: field-data-container;
+  }
+
   .job-results-container {
     grid-area: job-results-container;
   }
@@ -77,7 +82,7 @@
     grid-area: binning-chart-container;
   }
 
-  :is(.jobs-container, .job-results-container, .binning-chart-container) {
+  :is(.jobs-container, .field-data-container, .job-results-container, .binning-chart-container) {
     overflow-y: hidden;
   }
 </style>
@@ -88,6 +93,9 @@
   </section>
   <section class="jobs-container">
     <Jobs />
+  </section>
+  <section class="field-data-container">
+    <DataFieldComponent />
   </section>
   <section class="job-results-container">
     <BinningResults />
