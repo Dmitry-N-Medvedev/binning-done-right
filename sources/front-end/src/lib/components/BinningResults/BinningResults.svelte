@@ -119,7 +119,7 @@
   <span slot="table-caption" class="table-caption">binning results</span>
   <div slot="table-header-row">
     <div class="binning-result">
-      <div class="bin-id">id</div>
+      <div class="bin-id">bin</div>
       <div class="bin-lower-boundary">
         <MinMaxBoundary isN={true} />
       </div>
