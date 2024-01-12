@@ -34,7 +34,7 @@
 	"dependencies": {
 		"inter-ui": "^4.0.1"
 	},
-  "dependenciesMeta": {
+	"dependenciesMeta": {
 		"inter-ui": {
 			"injected": true
 		}
