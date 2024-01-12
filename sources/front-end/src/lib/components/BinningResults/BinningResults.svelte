@@ -54,7 +54,7 @@
     grid-template-areas:
       'bin-id bin-lower-boundary bin-upper-boundary bin-center bin-analyses'
     ;
-    grid-template-columns: 4rem repeat(3, 1fr) 2fr;
+    grid-template-columns: 4rem repeat(3, 8rem) 1fr;
     gap: var(--binning-results-gap);
     padding: var(--binning-results-gap);
     align-items: stretch;
