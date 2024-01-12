@@ -47,7 +47,7 @@
 
     display: grid;
     height: 100%;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 4fr;
     grid-template-rows: auto 1fr 1fr;
     grid-template-areas:
       'file-loader-container file-loader-container'
