@@ -7,6 +7,7 @@
   } = $props();
 
   let isFocused = $state(false);
+  let numOfUploadedChunks = $derived(job?.extra?.numOfUploadedChunks);
 </script>
 
 <style>
@@ -17,6 +18,7 @@
     grid-template-areas:
       'source-data-file records-info channel'
       'progress progress progress'
+      'upload upload upload'
     ;
     gap: var(--gap);
     padding: var(--gap);
@@ -48,7 +50,7 @@
     font-size: 1.3rem;
   }
 
-  :is(.source-data-file, .records-info, .channel, .progress) {
+  :is(.source-data-file, .records-info, .channel, .progress, .upload) {
     display: flex;
     align-items: center;
     pointer-events: none;
@@ -64,22 +66,36 @@
 
   .progress[value] {
     grid-area: progress;
+  }
+  
+  .upload[value] {
+    grid-area: upload;
+  }
+
+  .progress[value],
+  .upload[value] {
     height: 0.5rem;
     width: 100%;
     -webkit-appearance: none;
   }
 
-  .progress[value]::-webkit-progress-inner-element {
+  .progress[value]::-webkit-progress-inner-element,
+  .upload[value]::-webkit-progress-inner-element {
     border: 1px solid var(--progress-inner-border-color);
   }
 
-  .progress[value]::-webkit-progress-bar {
+  .progress[value]::-webkit-progress-bar,
+  .upload[value]::-webkit-progress-bar {
     background-color: var(--progress-value-background);
     padding: 2px;
   }
 
   .progress[value]::-webkit-progress-value {
     background-color: var(--progress-value-color);
+  }
+
+  .upload[value]::-webkit-progress-value {
+    background-color: var(--theme-red);
   }
 
   .isFocused {
@@ -93,4 +109,5 @@
   <div class="records-info">{job.progress.recordsProcessed}/{job.progress.recordsTotal}</div>
   <div class="channel">{job.channelName}</div>
   <progress class="progress" max={job.progress.recordsTotal} value="{job.progress.recordsProcessed}" aria-label="job progress"></progress>
+  <progress class="upload" max={job.extra.numOfChunksToUpload} value="{numOfUploadedChunks}" aria-label="job progress"></progress>
 </fieldset>

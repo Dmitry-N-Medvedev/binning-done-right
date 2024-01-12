@@ -11,8 +11,6 @@
     fakeJobResults,
   } from '$lib/scripts/fakeJobResults.svelte.js';
 
-  const NETWORK_FRAME_SIZE = 1500;
-
   /**
    * @typedef {import('../lib/structures/createDataFileStructure.js').DataFileStructure} DataFileStructure
   */
@@ -20,7 +18,7 @@
   /**
    * @param e {DataFileStructure | null}
    */
-  const handleOnFile = async(e = null) => {
+  const handleUploadFileRequest = async(e = null) => {
     const {
       type = null,
       /**
@@ -38,48 +36,9 @@
       throw new TypeError('not of the "file" type');
     }
 
-    const fileStreamReader = new ReadableStreamBYOBReader(payload.stream());
-
-    let frameCounter = 0;
-
-    while(true) {
-      const view = new Uint8Array(NETWORK_FRAME_SIZE);
-      const { done, value } = await fileStreamReader.read(view);
-
-      if (done) {
-        return Promise.resolve;
-      } else {
-        sendChunk(value, frameCounter, tx);
-
-        frameCounter += 1;
-      }
-    }
-
-    // fakeJobResults(payload);
+    fakeJobResults(payload);
   };
 
-  /**
-   * 
-   * @param frame {Uint8Array}
-   * @param frameCounter {Number}
-   * @param tx {String}
-   */
-  const sendChunk = async(frame, frameCounter, tx) => {
-    const networkMessageObject = {
-      type: 'csv',
-      meta: {
-        tx,
-        frameCounter,
-      },
-      payload: frame,
-    };
-    
-    const networkMessage = (new TextEncoder()).encode(JSON.stringify(networkMessageObject));
-
-    console.log({ networkMessage, exceeds: networkMessage.byteLength - NETWORK_FRAME_SIZE });
-
-    return Promise.resolve;
-  };
 </script>
 
 <style>
@@ -125,7 +84,7 @@
 
 <article>
   <section class="file-loader-container">
-    <FileLoader onFile={handleOnFile} />
+    <FileLoader onFile={handleUploadFileRequest} />
   </section>
   <section class="jobs-container">
     <Jobs />
