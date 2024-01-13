@@ -6,34 +6,12 @@
   import MinMaxBoundary from '../MinMaxBoundary/MinMaxBoundary.svelte';
   import HorizontalCenter from '$lib/icons/HorizontalCenter.svelte';
   import MultiValueCell from '../MultiValueCell/MultiValueCell.svelte';
-
-  const toFixed = (n = 0, f = 2) => {
-    return Number.parseFloat(n).toFixed(f);
-  }
-
-  /**
-   * 
-   * @param key {String | null}
-   * @param value {String | null}
-   */
-  const format = (key = null, value = null) => {
-    switch(key) {
-      case 'avg': 
-      case 'mean':
-      case 'sum':
-      case 'min':
-      case 'max':
-      {
-        return toFixed(Number.parseFloat(value), 5);
-      }
-      case 'median': {
-        return toFixed(Number.parseFloat(value), 2);
-      }
-      default: {
-        throw new TypeError(`unknown key: ${key}`);
-      }
-    }
-  };
+  import {
+    formatNumber,
+  } from '$lib/helpers/formatNumber.js';
+  import {
+    toFixed,
+  } from '$lib/helpers/toFixed.js';
 
   let itemsMap = $derived(BinningResultsStore.state);
 </script>
@@ -140,7 +118,7 @@
         <div class="bin-upper-boundary">{toFixed(binningResult.binUpperBoundary, 3)}</div>
         <div class="bin-center">{toFixed(binningResult.binCenter)}</div>
         <div class="bin-analyses">
-          <MultiValueCell dataObject={binningResult.analyses} {format} />
+          <MultiValueCell dataObject={binningResult.analyses} format={formatNumber} />
         </div>
       </div>  
   {/each}

@@ -3,6 +3,10 @@
     DataColumnStore,
   } from '$lib/stores/DataColumnStore.svelte.js';
   import Table from '$lib/components/Table/Table.svelte';
+  import {
+    toFixed,
+  } from '$lib/helpers/toFixed.js';
+  import Number from '$lib/components/Number/Number.svelte';
 </script>
 
 <style>
@@ -61,7 +65,9 @@
     {#each DataColumnStore.state as { id, value, bin }(id)}
       <div class="table-row">
         <div class="id">{id}</div>
-        <div class="value">{value}</div>
+        <div class="value">
+          <Number n={value} />
+        </div>
         <div class="bin">{bin}</div>
       </div>
     {/each}
