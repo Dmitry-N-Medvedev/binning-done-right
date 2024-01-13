@@ -4,13 +4,7 @@ class DataColumn {
   constructor() {
     const result = [];
 
-    result.push({
-      id: 0,
-      value: 0,
-      bin: 0,
-    })
-
-    for (let i = 1; i < 100; i += 1) {
+    for (let i = 0; i < 100; i += 1) {
       const isBelowZero = Math.random() < 0.5;
       const absValue = Math.random();
       const value = {

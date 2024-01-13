@@ -15,10 +15,9 @@
     grid-template-columns: 1fr;
     grid-auto-flow: row;
     pointer-events: auto;
-    gap: var(--gap);
+    /* gap: var(--gap); */
   }
 
-  .table-header-row,
   .table-row {
     display: grid;
     grid-template-columns: 8rem 1fr 8rem;
@@ -52,16 +51,16 @@
     justify-content: center;
     align-items: center;
   }
+
 </style>
 
 <Table>
-  <span slot="table-caption" class="table-caption">Wind Shear RM</span>
-  <div slot="table-header-row" class="table-header-row">
-    <div class="id">id</div>
-    <div class="value">value</div>
-    <div class="bin">bin</div>
-  </div>
   <div slot="table-rows" class="table-rows">
+    <div class="table-row">
+      <div class="id">id</div>
+      <div class="value">value</div>
+      <div class="bin">bin</div>
+    </div>
     {#each DataColumnStore.state as { id, value, bin }(id)}
       <div class="table-row">
         <div class="id">{id}</div>

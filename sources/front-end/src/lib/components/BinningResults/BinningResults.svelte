@@ -17,16 +17,9 @@
 </script>
 
 <style>
-  /* :root {
-    --table-background-color: var(--theme-black);
-    --table-results-gap: calc(var(--gap) / 2);
-    --table-caption-color: var(--main-background-color);
-    --table-header-row-color: var(--theme-white);
-  } */
-
   .binning-result {
     --visibility-on-hover: hidden;
-    --binning-results-gap: calc(var(--gap) / 2);
+    --binning-results-gap: var(--gap);
 
     display: grid;
     grid-template-areas:
@@ -36,7 +29,6 @@
     gap: var(--binning-results-gap);
     padding: var(--binning-results-gap);
     align-items: stretch;
-    min-height: 4rem;
 
     cursor: pointer;
   }
@@ -73,8 +65,8 @@
   .table-rows > .binning-result > .bin-analyses {
     grid-area: bin-analyses;
     display: flex;
-    justify-content: stretch;
-    align-items: stretch;
+    justify-content: center;
+    align-items: center;
   }
 
   :is(.bin-id, .bin-lower-boundary, .bin-upper-boundary, .bin-center, .bin-analyses) {
@@ -94,8 +86,7 @@
 </style>
 
 <Table>
-  <span slot="table-caption" class="table-caption">binning results</span>
-  <div slot="table-header-row">
+  <div slot="table-rows" class="table-rows">
     <div class="binning-result">
       <div class="bin-id">bin</div>
       <div class="bin-lower-boundary">
@@ -107,10 +98,10 @@
       <div class="bin-center">
         <HorizontalCenter width="2.5rem" height="2.5rem" />
       </div>
-      <div class="bin-analyses">analyses</div>
+      <div class="bin-analyses">
+        analyses
+      </div>
     </div>
-  </div>
-  <div slot="table-rows" class="table-rows">
     {#each itemsMap?.values() as binningResult(binningResult.id)}
       <div id={binningResult.id} class="binning-result">
         <div class="bin-id">{binningResult.id}</div>

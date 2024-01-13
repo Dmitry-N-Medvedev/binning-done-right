@@ -44,6 +44,11 @@
 
 <style>
   article {
+    --table-caption-font-size: 4rem;
+    --table-caption-font-weight: 900;
+    --table-caption-text-transform: uppercase;
+    --table-caption-font-variation-settings: "wght" 900, "opsz" 32;
+
     --gap: 0.5rem;
 
     display: grid;
@@ -85,6 +90,36 @@
   :is(.jobs-container, .field-data-container, .job-results-container, .binning-chart-container) {
     overflow-y: hidden;
   }
+
+  :is(.field-data-container, .job-results-container) {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content 1fr;
+    grid-template-areas:
+      'section-caption'
+      'section-content'
+    ;
+  }
+
+  .section-caption {
+    grid-area: section-caption;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--main-background-color);
+    background-color: var(--theme-black);
+
+    font-size: var(--table-caption-font-size);
+    font-weight: var(--table-caption-font-weight);
+    text-transform: var(--table-caption-text-transform);
+    font-variation-settings: var(--table-caption-font-variation-settings);
+  }
+
+  .section-content {
+    grid-area: section-content;
+    display: contents;
+  }
 </style>
 
 <article>
@@ -95,10 +130,16 @@
     <Jobs />
   </section>
   <section class="field-data-container">
-    <DataFieldComponent />
+    <div class="section-caption">wind shear rm</div>
+    <div class="section-content">
+      <DataFieldComponent />
+    </div>
   </section>
   <section class="job-results-container">
-    <BinningResults />
+    <div class="section-caption">binning results</div>
+    <div class="section-content">
+      <BinningResults />
+    </div>
   </section>
   <section class="binning-chart-container">
     <BinningChart />

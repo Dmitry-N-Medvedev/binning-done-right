@@ -14,6 +14,7 @@
       'a n'
     ;
     gap: var(--gap);
+    text-transform: lowercase;
   }
 
   .min-max-a {
@@ -40,8 +41,8 @@
 
   :is(.min-max-m, .min-max-n) {
     justify-content: start;
-    font-size: 3rem;
-    line-height: 2.6rem;
+    font-size: 2.5rem;
+    line-height: 2.125rem;
     color: var(--theme-light_gray_bright);
   }
 
