@@ -41,7 +41,7 @@
 
 html {
   font-family: var(--main-font-family);
-  /* pointer-events: none; */
+  pointer-events: none;
   user-select: none;
 }
 
