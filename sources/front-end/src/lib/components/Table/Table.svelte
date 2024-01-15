@@ -55,6 +55,8 @@
     font-variation-settings: var(--table-header-row-font-variation-settings);
     color: var(--theme-green);
     text-transform: var(--table-header-row-text-transform);
+
+    pointer-events: none;
   }
   
   :global(.table-rows > :not(:first-child) > div) {
